@@ -1,5 +1,5 @@
-const GravatarRegistry = artifacts.require('./GravatarRegistry.sol')
+const EthlanceJobs = artifacts.require('./EthlanceJobs.sol')
 
 module.exports = async function(deployer) {
-  await deployer.deploy(GravatarRegistry)
+  await deployer.deploy(EthlanceJobs)
 }

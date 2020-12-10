@@ -1,6 +1,25 @@
-type Gravatar @entity {
+enum JobState {
+  Created
+  Assigned
+  InProgress
+  Submitted
+  Paid
+}
+
+type Job @entity {
   id: ID!
-  owner: Bytes!
-  displayName: String!
-  imageUrl: String!
+  state: JobState
+  creator: Bytes
+  token: Bytes
+  content: String
+  num_job_changes: Int
+  num_data_changes: Int
+  num_contributions: Int
+  num_refunds: Int
+  contributor: Contributor
+}
+
+type Contributor @entity {
+  id: ID!
+  job: Job
 }

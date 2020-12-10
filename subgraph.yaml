@@ -1,27 +1,43 @@
 specVersion: 0.0.2
-description: Gravatar for Ethereum
-repository: https://github.com/graphprotocol/example-subgraph
+description: Ethlance - the native Ethereum job market
+repository: https://github.com/endymionjkb/ethlance-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Gravity
+    name: EthlanceJobs
     network: mainnet
     source:
-      address: '0x2E645469f354BB4F5c8a05B3b30A929361cf77eC'
-      abi: Gravity
+      address: '0xB9E80ce5A7CbbA0Aab685797F6585AD1f3c90028'
+      abi: EthlanceJobs
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - Gravatar
+        - Job
+        - Contributor
       abis:
-        - name: Gravity
-          file: ./abis/Gravity.json
+        - name: EthlanceJobs
+          file: ./build/contracts/EthlanceJobs.json
       eventHandlers:
-        - event: NewGravatar(uint256,address,string,string)
-          handler: handleNewGravatar
-        - event: UpdatedGravatar(uint256,address,string,string)
-          handler: handleUpdatedGravatar
+        - event: JobIssued(uint256,address,address[],address[],string,address,uint256)
+          handler: handleJobIssued
+        - event: ContributionAdded(uint256,uint256,address,uint256)
+          handler: handleContributionAdded
+        - event: ContributionRefunded(uint256,uint256)
+          handler: handleContributionRefunded
+        - event: JobInvoice(uint256,uint256,address,string,address,uint256)
+          handler: handleJobInvoice
+        - event: InvoiceAccepted(uint256,uint256,address,uint256)
+          handler: handleInvoiceAccepted
+        - event: JobChanged(uint256,address,address[],address[],string)
+          handler: handleJobChanged
+        - event: JobDataChanged(uint256,address,string)
+          handler: handleJobDataChanged
+        - event: CandidateAccepted(uint256,address)
+          handler: handleCandidateAccepted
+        - event: InvoiceCancelled(address,uint256,uint256)
+          handler: handleInvoiceCancelled
       file: ./src/mapping.ts
+
